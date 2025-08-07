@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<head>
+    <title>Self.ie - Self Install Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            font-size: 16px !important;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 4px;
+            font-size: 18px;
+        }
+
+        .upload-form {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-form label {
+            font-weight: bold;
+        }
+
+        .upload-form input[type="file"] {
+            margin-top: 5px;
+            padding: 5px;
+        }
+
+        .upload-form button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .upload-form button:hover {
+            background: #43a047;
+        }
+
+        .report-container {
+            display: grid;
+            grid-template-columns: 0.6fr 1fr 1.4fr;
+            gap: 10px;
+            margin-top: 60px; /* Space for button */
+        }
+
+        .section-1,
+        .section-2,
+        .section-3 {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            font-size: 15px;
+
+        }
+
+        /* Top reps highlight */
+        .highlight {
+            border-left: 5px solid #4CAF50;
+            padding: 5px 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            padding-right: 10px; /* optional for spacing */
+        }
+
+        .highlight.green {
+            background: #e8f5e9;
+        }
+        .highlight.white {
+            background: white;
+            border-left: 5px solid #ccc;
+        }
+
+        .rep-name {
+            white-space: nowrap;
+        }
+
+        .rep-installs {
+            text-align: right;
+            min-width: 30px; /* keeps numbers aligned */
+        }
+
+        /* Zero installs list */
+        .zero-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .zero-item {
+            background: #fce4ec;
+            color: #ad1457;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Team breakdown - 4 columns */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .team-block {
+            background: #fafafa;
+            padding: 5px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .team-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .team-block strong {
+            color: #1565c0;
+        }
+
+        /* Error message */
+        .error {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #copyImage1Button,
+        #copyImage2Button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: none; /* Hidden by default */
+        }
+        #copyImage1Button:hover,
+        #copyImage2Button:hover {
+            background: #43a047;
+        }
+
+        .report-wrapper {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Self.ie - Self Install Report</h1>
+
+<div class="upload-form">
+    <form method="POST" enctype="multipart/form-data">
+        <label>Raw Self Installs CSV:</label><br>
+        <input type="file" name="raw_csv" required><br><br>
+        <label>Users CSV:</label><br>
+        <input type="file" name="users_csv" required><br><br>
+        <button type="submit">Generate Report</button>
+    </form>
+</div>
+
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+
+{% if report_data %}
+<div class="report-wrapper">
+    <button id="copyImage1Button" style="right: 180px;">📸 Copy Rep Report</button>
+    <button id="copyImage2Button">📸 Copy Team Report</button>
+
+    <div class="report-container">
+        <!-- Left Column: Top Reps -->
+        <div class="section-1">
+            <h2>Self installs per Rep</h2>
+            {% for rep in report_data.top_reps %}
+            <div class="highlight {% if loop.index <= 5 %}green{% else %}white{% endif %}">
+                <span class="rep-name">{{ rep.Rep }}</span>
+                <span class="rep-installs">{{ rep.Installs }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Middle Column: Zero Installs -->
+        <div class="section-2">
+            <h2>Reps with 0 self installs</h2>
+            <div class="zero-list">
+                {% for rep in report_data.zero_reps %}
+                {% if rep and rep|string|lower != 'nan' %}
+                <div class="zero-item">{{ rep }}</div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Right Column: Team Breakdown -->
+        <div class="section-3">
+            <h2>Self Installs by Team</h2>
+            <div class="team-grid">
+                {% for team in report_data.team_breakdown %}
+                <div class="team-block">
+                    <div class="team-title">{{ team.team }} ({{ team.total }})</div>
+                    {% if team.manager and team.manager_installs is not none %}
+                    <div><strong>{{ team.manager }}</strong> | {{ team.manager_installs }}</div>
+                    {% endif %}
+                    {% for rep in team.reps %}
+                    {% if rep["Rep"] != team.manager %}
+                    <div>{{ rep["Rep"] }} | {{ rep.Installs}}</div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Show buttons only when report exists
+    document.getElementById("copyImage1Button").style.display = "inline-block";
+    document.getElementById("copyImage2Button").style.display = "inline-block";
+
+    const copyTopButton = document.getElementById("copyImage1Button");
+    const copyBottomButton = document.getElementById("copyImage2Button");
+
+    const section1 = document.querySelector(".section-1");
+    const section2 = document.querySelector(".section-2");
+    const section3 = document.querySelector(".section-3");
+
+    function copyElementAsImage(element, button) {
+        button.style.visibility = "hidden"; // Hide button in screenshot
+        html2canvas(element, {
+            backgroundColor: null,
+            scale: 3 // Higher scale for better readability
+        }).then(canvas => {
+            canvas.toBlob(blob => {
+                navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blob })
+                ]).then(() => {
+                    button.style.backgroundColor = "#2e7d32"; // Temporary success color
+                    setTimeout(() => button.style.backgroundColor = "#4CAF50", 1000);
+                    button.style.visibility = "visible";
+                }).catch(err => {
+                    console.error("Clipboard copy failed", err);
+                    button.style.visibility = "visible";
+                });
+            });
+        });
+    }
+
+    if (copyTopButton && section1 && section2) {
+        copyTopButton.addEventListener("click", function () {
+            const tempContainer = document.createElement("div");
+
+            // Same base look as report-container but only 2 columns
+            tempContainer.style.display = "grid";
+            tempContainer.style.gridTemplateColumns = "0.6fr 1fr"; // remove the 3rd column
+            tempContainer.style.gap = "10px";
+            tempContainer.style.background = "white";
+            tempContainer.style.width = 
+                section1.offsetWidth + section2.offsetWidth + 10 + "px";
+
+            // Clone and append sections
+            tempContainer.appendChild(section1.cloneNode(true));
+            tempContainer.appendChild(section2.cloneNode(true));
+
+            // Hide offscreen
+            tempContainer.style.position = "absolute";
+            tempContainer.style.left = "-9999px";
+            document.body.appendChild(tempContainer);
+
+            // Screenshot the container
+            copyElementAsImage(tempContainer, copyTopButton);
+
+            setTimeout(() => tempContainer.remove(), 500);
+        });
+    }
+
+    if (copyBottomButton && section3) {
+        copyBottomButton.addEventListener("click", function () {
+            // Clone section-3 for snippet
+            const section3Clone = section3.cloneNode(true);
+
+            // Force 5 columns in snippet
+            const teamGrid = section3Clone.querySelector(".team-grid");
+            if (teamGrid) {
+                teamGrid.style.gridTemplateColumns = "repeat(5, 1fr)";
+                teamGrid.style.gap = "10px";
+            }
+
+            // Style container
+            section3Clone.style.background = "white";
+            section3Clone.style.position = "absolute";
+            section3Clone.style.left = "-9999px";
+            document.body.appendChild(section3Clone);
+
+            // Capture screenshot
+            copyElementAsImage(section3Clone, copyBottomButton);
+
+            // Cleanup
+            setTimeout(() => section3Clone.remove(), 500);
+        });
+    }
+
+
+
+});
+</script>
+{% endif %}
+
+</body>
+</html>
