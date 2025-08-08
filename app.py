@@ -2,10 +2,34 @@ from flask import Flask, render_template, request
 import pandas as pd
 from io import TextIOWrapper
 import numpy as np
+import os
+import gspread
+from google_auth import get_credentials
 
 app = Flask(__name__)
 
 last_rep_col_users = None  # Keep track of rep column name for CSV export
+
+# --- Google Sheets loader for Users list ---
+def load_users_from_sheet():
+    """Load the Users list from Google Sheets using a service account.
+
+    Environment:
+      - GOOGLE_APPLICATION_CREDENTIALS_JSON: full SA JSON string
+      - USERS_SHEET_ID: Google Sheet ID
+      - USERS_SHEET_NAME (optional): tab name; defaults to 'Sheet1'
+    """
+    sheet_id = os.environ.get("USERS_SHEET_ID")
+    if not sheet_id:
+        raise RuntimeError("USERS_SHEET_ID is not set.")
+    sheet_name = os.environ.get("USERS_SHEET_NAME", "Sheet1")
+
+    creds = get_credentials()
+    gc = gspread.authorize(creds)
+    sh = gc.open_by_key(sheet_id)
+    ws = sh.worksheet(sheet_name) if sheet_name else sh.sheet1
+    records = ws.get_all_records()
+    return pd.DataFrame(records)
 
 # --- Column detection helpers ---
 def detect_column(df, possible_names):
@@ -34,12 +58,12 @@ def index():
         try:
             # Read uploaded files
             raw_file = request.files.get("raw_csv")
-            users_file = request.files.get("users_csv")
-            if not raw_file or not users_file:
-                raise ValueError("Please upload both required CSV files.")
+            if not raw_file:
+                raise ValueError("Please upload the Raw Self Installs CSV.")
 
             raw_df = pd.read_csv(TextIOWrapper(raw_file, encoding='utf-8'))
-            users_df = pd.read_csv(TextIOWrapper(users_file, encoding='utf-8'))
+            # Always load Users from Google Sheets now
+            users_df = load_users_from_sheet()
 
             # Detect columns
             rep_col_raw = detect_rep_column(raw_df)
