@@ -16,168 +16,148 @@
 
         h1 {
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 26px;
-        }
-
-        h2 {
-            margin-bottom: 10px;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 4px;
-            font-size: 18px;
+            color: #1a73e8;
+            font-weight: 700;
         }
 
         .upload-form {
-            background: white;
-            padding: 15px;
+            background: #fff;
+            padding: 20px;
             border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 24px auto;
         }
 
-        .upload-form label {
-            font-weight: bold;
+        label {
+            display: inline-block;
+            margin: 8px 0 4px;
+            font-weight: 600;
         }
 
-        .upload-form input[type="file"] {
-            margin-top: 5px;
-            padding: 5px;
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
         }
 
-        .upload-form button {
-            background: #4CAF50;
+        button[type="submit"] {
+            background: #1a73e8;
             color: white;
             border: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 6px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
             cursor: pointer;
-            transition: background 0.2s ease-in-out;
+            font-weight: 600;
         }
 
-        .upload-form button:hover {
-            background: #43a047;
+        .error {
+            color: #b91c1c;
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 16px auto;
         }
 
-        .report-container {
-            display: grid;
-            grid-template-columns: 0.6fr 1fr 1.4fr;
-            gap: 10px;
-            margin-top: 60px; /* Space for button */
+        .results {
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
-        .section-1,
-        .section-2,
-        .section-3 {
-            background: white;
-            padding: 15px;
+        .section {
+            background: #fff;
+            padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            font-size: 15px;
-
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
         }
 
-        /* Top reps highlight */
-        .highlight {
-            border-left: 5px solid #4CAF50;
-            padding: 5px 8px;
-            border-radius: 4px;
-            margin-bottom: 4px;
-            font-weight: 500;
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+
+        .capture-btn {
+            display: inline-block;
+            background: #0ea5e9;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .spacer {
+            height: 8px;
+        }
+
+        .section-title {
             display: flex;
             justify-content: space-between;
-            padding-right: 10px; /* optional for spacing */
+            align-items: center;
         }
 
-        .highlight.green {
-            background: #e8f5e9;
-        }
-        .highlight.white {
-            background: white;
-            border-left: 5px solid #ccc;
+        .note {
+            font-size: 12px;
+            color: #475569;
         }
 
-        .rep-name {
-            white-space: nowrap;
-        }
-
-        .rep-installs {
-            text-align: right;
-            min-width: 30px; /* keeps numbers aligned */
-        }
-
-        /* Zero installs list */
-        .zero-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .zero-item {
-            background: #fce4ec;
-            color: #ad1457;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        /* Team breakdown - 4 columns */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .team-block {
-            background: #fafafa;
-            padding: 5px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-        }
-
-        .team-title {
-            font-weight: bold;
-            font-size: 1.05em;
-            color: #2e7d32;
-            margin-bottom: 5px;
-        }
-
-        .team-block strong {
-            color: #1565c0;
-        }
-
-        /* Error message */
-        .error {
-            color: red;
+        .footer {
             text-align: center;
-            font-weight: bold;
-            margin-bottom: 15px;
+            color: #6b7280;
+            font-size: 12px;
+            margin-top: 24px;
         }
 
-        #copyImage1Button,
-        #copyImage2Button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            display: none; /* Hidden by default */
-        }
-        #copyImage1Button:hover,
-        #copyImage2Button:hover {
-            background: #43a047;
+        .download-hint {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 6px;
         }
 
-        .report-wrapper {
+        .relative {
             position: relative;
         }
     </style>
@@ -190,8 +170,6 @@
     <form method="POST" enctype="multipart/form-data">
         <label>Raw Self Installs CSV:</label><br>
         <input type="file" name="raw_csv" required><br><br>
-        <label>Users CSV:</label><br>
-        <input type="file" name="users_csv" required><br><br>
         <button type="submit">Generate Report</button>
     </form>
 </div>
@@ -201,146 +179,152 @@
 {% endif %}
 
 {% if report_data %}
-<div class="report-wrapper">
-    <button id="copyImage1Button" style="right: 180px;">📸 Copy Rep Report</button>
-    <button id="copyImage2Button">📸 Copy Team Report</button>
+<div class="results">
 
-    <div class="report-container">
-        <!-- Left Column: Top Reps -->
-        <div class="section-1">
-            <h2>Self installs per Rep</h2>
-            {% for rep in report_data.top_reps %}
-            <div class="highlight {% if loop.index <= 5 %}green{% else %}white{% endif %}">
-                <span class="rep-name">{{ rep.Rep }}</span>
-                <span class="rep-installs">{{ rep.Installs }}</span>
+    <!-- SECTION 1: Top Reps -->
+    <div class="section" id="section1">
+        <div class="section-title">
+            <h2>Top Reps</h2>
+            <div class="controls">
+                <span class="badge">Sorted by Installs</span>
+                <a id="captureTop" class="capture-btn">Capture Section</a>
+            </div>
+        </div>
+        <div class="spacer"></div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Rep</th>
+                    <th>Installs</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in report_data.top_reps %}
+                <tr>
+                    <td>{{ row.Rep }}</td>
+                    <td>{{ row.Installs }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="download-hint">You can paste this table into email or Sheets.</div>
+    </div>
+
+    <!-- SECTION 2: Zero Installs -->
+    <div class="section" id="section2">
+        <div class="section-title">
+            <h2>Zero Install Reps</h2>
+            <a id="captureZero" class="capture-btn">Capture Section</a>
+        </div>
+        <div class="spacer"></div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Rep</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rep in report_data.zero_reps %}
+                <tr>
+                    <td>{{ rep }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECTION 3: Team Breakdown -->
+    <div class="section" id="section3">
+        <div class="section-title">
+            <h2>Team Breakdown</h2>
+            <a id="captureTeam" class="capture-btn">Capture Section</a>
+        </div>
+        <div class="spacer"></div>
+
+        <div class="grid">
+            {% for team in report_data.team_breakdown %}
+            <div class="section">
+                <h3>{{ team.team }}</h3>
+                <p class="note">Manager: <strong>{{ team.manager }}</strong> &nbsp;•&nbsp; Manager Installs: <strong>{{ team.manager_installs }}</strong> &nbsp;•&nbsp; Total: <strong>{{ team.total }}</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rep</th>
+                            <th>Installs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in team.reps %}
+                        <tr>
+                            <td>{{ row[report_data.top_reps[0].keys()|list|first] if row.get('Rep') is none else row.Rep }}</td>
+                            <td>{{ row.Installs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             {% endfor %}
         </div>
+    </div>
 
-        <!-- Middle Column: Zero Installs -->
-        <div class="section-2">
-            <h2>Reps with 0 self installs</h2>
-            <div class="zero-list">
-                {% for rep in report_data.zero_reps %}
-                {% if rep and rep|string|lower != 'nan' %}
-                <div class="zero-item">{{ rep }}</div>
-                {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-
-        <!-- Right Column: Team Breakdown -->
-        <div class="section-3">
-            <h2>Self Installs by Team</h2>
-            <div class="team-grid">
-                {% for team in report_data.team_breakdown %}
-                <div class="team-block">
-                    <div class="team-title">{{ team.team }} ({{ team.total }})</div>
-                    {% if team.manager and team.manager_installs is not none %}
-                    <div><strong>{{ team.manager }}</strong> | {{ team.manager_installs }}</div>
-                    {% endif %}
-                    {% for rep in team.reps %}
-                    {% if rep["Rep"] != team.manager %}
-                    <div>{{ rep["Rep"] }} | {{ rep.Installs}}</div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="footer">
+        Generated by Self.ie
     </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Show buttons only when report exists
-    document.getElementById("copyImage1Button").style.display = "inline-block";
-    document.getElementById("copyImage2Button").style.display = "inline-block";
-
-    const copyTopButton = document.getElementById("copyImage1Button");
-    const copyBottomButton = document.getElementById("copyImage2Button");
-
-    const section1 = document.querySelector(".section-1");
-    const section2 = document.querySelector(".section-2");
-    const section3 = document.querySelector(".section-3");
-
-    function copyElementAsImage(element, button) {
-        button.style.visibility = "hidden"; // Hide button in screenshot
-        html2canvas(element, {
-            backgroundColor: null,
-            scale: 3 // Higher scale for better readability
-        }).then(canvas => {
-            canvas.toBlob(blob => {
-                navigator.clipboard.write([
-                    new ClipboardItem({ 'image/png': blob })
-                ]).then(() => {
-                    button.style.backgroundColor = "#2e7d32"; // Temporary success color
-                    setTimeout(() => button.style.backgroundColor = "#4CAF50", 1000);
-                    button.style.visibility = "visible";
-                }).catch(err => {
-                    console.error("Clipboard copy failed", err);
-                    button.style.visibility = "visible";
-                });
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    function captureAndDownload(elementId, filename) {
+        const element = document.getElementById(elementId);
+        html2canvas(element).then(canvas => {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
         });
     }
 
-    if (copyTopButton && section1 && section2) {
-        copyTopButton.addEventListener("click", function () {
-            const tempContainer = document.createElement("div");
-
-            // Same base look as report-container but only 2 columns
-            tempContainer.style.display = "grid";
-            tempContainer.style.gridTemplateColumns = "0.6fr 1fr"; // remove the 3rd column
-            tempContainer.style.gap = "10px";
-            tempContainer.style.background = "white";
-            tempContainer.style.width = 
-                section1.offsetWidth + section2.offsetWidth + 10 + "px";
-
-            // Clone and append sections
-            tempContainer.appendChild(section1.cloneNode(true));
-            tempContainer.appendChild(section2.cloneNode(true));
-
-            // Hide offscreen
-            tempContainer.style.position = "absolute";
-            tempContainer.style.left = "-9999px";
-            document.body.appendChild(tempContainer);
-
-            // Screenshot the container
-            copyElementAsImage(tempContainer, copyTopButton);
-
-            setTimeout(() => tempContainer.remove(), 500);
+    const capTop = document.getElementById('captureTop');
+    if (capTop) {
+        capTop.addEventListener('click', function() {
+            captureAndDownload('section1', 'top_reps.png');
         });
     }
 
-    if (copyBottomButton && section3) {
-        copyBottomButton.addEventListener("click", function () {
-            // Clone section-3 for snippet
+    const capZero = document.getElementById('captureZero');
+    if (capZero) {
+        capZero.addEventListener('click', function() {
+            captureAndDownload('section2', 'zero_reps.png');
+        });
+    }
+
+    const capTeam = document.getElementById('captureTeam');
+    if (capTeam) {
+        capTeam.addEventListener('click', function() {
+            const section3 = document.getElementById('section3');
             const section3Clone = section3.cloneNode(true);
-
-            // Force 5 columns in snippet
-            const teamGrid = section3Clone.querySelector(".team-grid");
-            if (teamGrid) {
-                teamGrid.style.gridTemplateColumns = "repeat(5, 1fr)";
-                teamGrid.style.gap = "10px";
-            }
-
-            // Style container
-            section3Clone.style.background = "white";
-            section3Clone.style.position = "absolute";
-            section3Clone.style.left = "-9999px";
+            const cards = section3Clone.querySelectorAll('.grid > .section');
+            cards.forEach(card => {
+                card.style.pageBreakInside = 'avoid';
+                card.style.marginBottom = '12px';
+            });
+            section3Clone.style.background = '#fff';
+            section3Clone.style.padding = '20px';
+            section3Clone.style.borderRadius = '12px';
+            section3Clone.style.boxShadow = 'none';
+            section3Clone.style.position = 'relative';
             document.body.appendChild(section3Clone);
-
-            // Capture screenshot
-            copyElementAsImage(section3Clone, copyBottomButton);
-
-            // Cleanup
+            html2canvas(section3Clone).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'team_breakdown.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
             setTimeout(() => section3Clone.remove(), 500);
         });
     }
-
-
-
 });
 </script>
 {% endif %}
