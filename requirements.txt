@@ -1,4 +1,5 @@
 flask
+gspread
 pandas
 openpyxl
 gunicorn
