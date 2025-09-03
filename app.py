@@ -89,6 +89,9 @@ def index():
                     ].sort_values("Installs", ascending=False)[[rep_col_users, "Installs"]]
                     reps_sorted = reps_sorted.replace({np.nan: None})
 
+                    # ✅ Normalize the rep column so the template's rep["Rep"] works
+                    reps_sorted = reps_sorted.rename(columns={rep_col_users: "Rep"})
+                    
                     team_breakdown.append({
                         "team": team_name,
                         "manager": manager,
