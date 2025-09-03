@@ -78,6 +78,10 @@ def index():
             if team_col and manager_col:
                 for team_name, team_df in merged.groupby(team_col):
                     manager = team_df[manager_col].iloc[0]
+                    
+                    if str(manager).strip().lower() == "michael grabowski".lower():
+                    continue
+                    
                     manager_installs = team_df.loc[
                         team_df[rep_col_users] == manager, "Installs"
                     ].sum()
