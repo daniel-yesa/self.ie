@@ -78,24 +78,23 @@ def index():
             if team_col and manager_col:
                 for team_name, team_df in merged.groupby(team_col):
                     manager = team_df[manager_col].iloc[0]
-                    
+                
+                    # 🚫 Skip Michael Grabowski and his team
                     if str(manager).strip().lower() == "michael grabowski".lower():
-                    continue
-                    
+                        continue
+                
                     manager_installs = team_df.loc[
                         team_df[rep_col_users] == manager, "Installs"
                     ].sum()
-
+                
                     total_team_installs = team_df["Installs"].sum()
-
+                
                     reps_sorted = team_df[
                         team_df[rep_col_users] != manager
                     ].sort_values("Installs", ascending=False)[[rep_col_users, "Installs"]]
+                    reps_sorted = reps_sorted.rename(columns={rep_col_users: "Rep"})  # normalize column
                     reps_sorted = reps_sorted.replace({np.nan: None})
-
-                    # ✅ Normalize the rep column so the template's rep["Rep"] works
-                    reps_sorted = reps_sorted.rename(columns={rep_col_users: "Rep"})
-                    
+                
                     team_breakdown.append({
                         "team": team_name,
                         "manager": manager,
